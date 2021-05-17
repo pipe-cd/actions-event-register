@@ -1,0 +1,32 @@
+name: 'Register event'
+description: 'Register an event to PipeCD'
+inputs:
+  api-address:
+    description: 'gRPC address to the PipeCD api server'
+    required: true
+    default: ''
+  api-key:
+    description: 'API key to which the READ_WRITE role is attached'
+    required: true
+    default: ''
+  event-name:
+    description: 'The name of Event'
+    required: true
+    default: ''
+  data:
+    description: 'The string value of event data'
+    required: true
+    default: ''
+  labels:
+    description: 'The comma-separated list of labels for the event. Format: key=value,key2=value2'
+    required: false
+    default: ''
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.api-address }}
+    - ${{ inputs.api-key }}
+    - ${{ inputs.event-name }}
+    - ${{ inputs.data }}
+    - ${{ inputs.labels }}
