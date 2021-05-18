@@ -1,6 +1,6 @@
 # actions-event-register
 A GitHub action for registering Events to PipeCD. This action makes it easier to use the Event watcher feature in a GitHub Actions workflow.
-For Event watcher, see: [the documentation](https://pipecd.dev/docs/user-guide/event-watcher)
+For Event watcher, see: [the documentation](https://pipecd.dev/docs/user-guide/event-watcher).
 
 ## Inputs
 
@@ -28,7 +28,7 @@ For Event watcher, see: [the documentation](https://pipecd.dev/docs/user-guide/e
 At first, you need to create new secrets with the name `PIPECD_API_ADDRESS` and `PIPECD_API_KEY`.
 The value of `PIPECD_API_ADDRESS` must be in a format like "host:443" because the communication is done via gRPC.
 
-### Using the commit SHA as data:
+### Using the commit SHA as data
 
 ```yaml
 name: "Register an event on PipeCD"
@@ -49,7 +49,7 @@ jobs:
         data: ${{ github.sha }}
 ```
 
-### Using git tag as data:
+### Using git tag as data
 
 ```yaml
 name: "Register an event on PipeCD"
