@@ -1,4 +1,4 @@
-name: 'Register event'
+name: 'PipeCD Register Event'
 description: 'Register an event to PipeCD'
 inputs:
   api-address:
