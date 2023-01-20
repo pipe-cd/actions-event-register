@@ -21,12 +21,57 @@ inputs:
     description: 'The comma-separated list of labels for the event. Format: key=value,key2=value2'
     required: false
     default: ''
+  pipectl-version:
+    description: 'The version of pipectl command. Release versions: https://github.com/pipe-cd/pipecd/releases'
+    required: false
+    default: 'v0.41.3'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.api-address }}
-    - ${{ inputs.api-key }}
-    - ${{ inputs.event-name }}
-    - ${{ inputs.data }}
-    - ${{ inputs.labels }}
+  using: 'composite'
+  steps:
+    - name: download pipectl
+      shell: bash -xe {0}
+      run: |
+        PLATFORM=""
+        if [ "$(uname)" == 'Darwin' ]; then
+          PLATFORM='darwin'
+        elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
+          PLATFORM='linux'
+        else
+          echo "UNSUPPORTED PLATFORM!!: $(uname -a)" 1>&2
+          exit 1
+        fi
+
+        ARCH=""
+        if [ "$(uname -m)" == 'arm64' ]; then
+          ARCH='arm64'
+        elif [ "$(uname -m)" == 'aarch64' ]; then
+          ARCH='arm64'
+        elif [ "$(uname -m)" == 'x86_64' ]; then
+          ARCH='amd64'
+        else
+          echo "UNSUPPORTED ARCHITECTURE!!: $(uname -a)" 1>&2
+          exit 1
+        fi
+
+        PIPECTL=/tmp/pipecd-event-register/pipectl
+        curl -L --silent --create-dirs -o ${PIPECTL} https://github.com/pipe-cd/pipecd/releases/download/${{ inputs.pipectl-version }}/pipectl_${{ inputs.pipectl-version }}_${PLATFORM}_${ARCH}
+        chmod +x ${PIPECTL}
+
+    - name: register event
+      shell: bash -e {0}
+      run: |
+        PIPECTL=/tmp/pipecd-event-register/pipectl
+        if [ -z "${{ inputs.labels }}" ]; then
+          ${PIPECTL} event register \
+            --address=${{ inputs.api-address }} \
+            --api-key=${{ inputs.api-key }} \
+            --name=${{ inputs.event-name }} \
+            --data=${{ inputs.data }}
+        else
+          ${PIPECTL} event register \
+            --address=${{ inputs.api-address }} \
+            --api-key=${{ inputs.api-key }} \
+            --name=${{ inputs.event-name }} \
+            --data=${{ inputs.data }} \
+            --labels=${{ inputs.labels }}
+        fi
