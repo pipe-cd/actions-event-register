@@ -24,6 +24,10 @@ For Event watcher, see: [the documentation](https://pipecd.dev/docs/user-guide/e
 
 **Optional**: The comma-separated list of labels for the event. Format: key=value,key2=value2
 
+### `pipectl-version`
+
+**Optional**: The version of pipectl command. Release versions: https://github.com/pipe-cd/pipecd/releases
+
 ## Examples
 At first, you need to create new secrets with the name `PIPECD_API_ADDRESS` and `PIPECD_API_KEY`.
 The value of `PIPECD_API_ADDRESS` must be in a format like "host:443" because the communication is done via gRPC.
@@ -47,6 +51,7 @@ jobs:
         event-name: image-update
         labels: app=foo,env=dev
         data: ${{ github.sha }}
+        pipectl-version: v0.41.3
 ```
 
 ### Using git tag as data
@@ -72,4 +77,5 @@ jobs:
         event-name: image-update
         labels: app=foo,env=dev
         data: ${{ env.TAG }}
+        pipectl-version: v0.41.3
 ```
