@@ -28,7 +28,7 @@ inputs:
   pipectl-version:
     description: 'The version of pipectl command. Release versions: https://github.com/pipe-cd/pipecd/releases'
     required: false
-    default: 'v0.41.3'
+    default: 'v0.49.3'
 runs:
   using: 'composite'
   steps:
