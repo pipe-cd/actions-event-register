@@ -24,6 +24,10 @@ For Event watcher, see: [the documentation](https://pipecd.dev/docs/user-guide/e
 
 **Optional**: The comma-separated list of labels for the event. Format: key=value,key2=value2
 
+### `contexts`
+
+**Optional**:　Require pipectl >= v0.49.3. The comma-separated list of contexts for the event. Format: key=value,key2=value2
+
 ### `pipectl-version`
 
 **Optional**: The version of pipectl command. Release versions: https://github.com/pipe-cd/pipecd/releases

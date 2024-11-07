@@ -21,10 +21,14 @@ inputs:
     description: 'The comma-separated list of labels for the event. Format: key=value,key2=value2'
     required: false
     default: ''
+  contexts:
+    description: 'Require pipectl >= v0.49.3. The comma-separated list of contexts for the event. Format: key=value,key2=value2'
+    required: false
+    default: ''
   pipectl-version:
     description: 'The version of pipectl command. Release versions: https://github.com/pipe-cd/pipecd/releases'
     required: false
-    default: 'v0.41.3'
+    default: 'v0.49.3'
 runs:
   using: 'composite'
   steps:
@@ -61,17 +65,19 @@ runs:
       shell: bash -e {0}
       run: |
         PIPECTL=/tmp/pipecd-event-register/pipectl
-        if [ -z "${{ inputs.labels }}" ]; then
-          ${PIPECTL} event register \
-            --address=${{ inputs.api-address }} \
-            --api-key=${{ inputs.api-key }} \
-            --name=${{ inputs.event-name }} \
-            --data=${{ inputs.data }}
-        else
-          ${PIPECTL} event register \
-            --address=${{ inputs.api-address }} \
-            --api-key=${{ inputs.api-key }} \
-            --name=${{ inputs.event-name }} \
-            --data=${{ inputs.data }} \
-            --labels=${{ inputs.labels }}
+        OPTIONS=(
+          --address=${{ inputs.api-address }}
+          --api-key=${{ inputs.api-key }}
+          --name=${{ inputs.event-name }}
+          --data=${{ inputs.data }}
+        )
+
+        if [ -n "${{ inputs.labels }}" ]; then
+          OPTIONS+=(--labels=${{ inputs.labels }})
         fi
+
+        if [ -n "${{ inputs.contexts }}" ]; then
+          OPTIONS+=(--contexts=${{ inputs.contexts }})
+        fi
+
+        ${PIPECTL} event register "${OPTIONS[@]}"
