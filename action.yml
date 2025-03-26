@@ -25,10 +25,34 @@ inputs:
     description: 'Require pipectl >= v0.49.3. The comma-separated list of contexts for the event. Format: key=value,key2=value2'
     required: false
     default: ''
+  commit-hash:
+    description: 'The commit hash that triggers the event. Required if you want to use PipeCD Deployment Trace feature.'
+    required: false
+    default: ''
+  commit-title:
+    description: 'The title of the commit that triggers the event.'
+    required: false
+    default: ''
+  commit-message:
+    description: 'The message of the commit that triggers the event.'
+    required: false
+    default: ''
+  commit-url:
+    description: 'The URL of the commit that triggers the event.'
+    required: false
+    default: ''
+  commit-author:
+    description: 'The author of the commit that triggers the event.'
+    required: false
+    default: ''
+  commit-timestamp:
+    description: 'The timestamp of the commit that triggers the event.'
+    required: false
+    default: ''
   pipectl-version:
     description: 'The version of pipectl command. Release versions: https://github.com/pipe-cd/pipecd/releases'
     required: false
-    default: 'v0.49.3'
+    default: 'v0.51.0'
 runs:
   using: 'composite'
   steps:
@@ -80,4 +104,28 @@ runs:
           OPTIONS+=(--contexts=${{ inputs.contexts }})
         fi
 
+        if [ -n "${{ inputs.commit-hash }}" ]; then
+          OPTIONS+=(--commit-hash=${{ inputs.commit-hash }})
+        fi
+
+        if [ -n "${{ inputs.commit-title }}" ]; then
+          OPTIONS+=(--commit-title=${{ inputs.commit-title }})
+        fi
+
+        if [ -n "${{ inputs.commit-message }}" ]; then
+          OPTIONS+=(--commit-message=${{ inputs.commit-message }})
+        fi
+
+        if [ -n "${{ inputs.commit-url }}" ]; then
+          OPTIONS+=(--commit-url=${{ inputs.commit-url }})
+        fi
+
+        if [ -n "${{ inputs.commit-author }}" ]; then
+          OPTIONS+=(--commit-author=${{ inputs.commit-author }})
+        fi
+
+        if [ -n "${{ inputs.commit-timestamp }}" ]; then
+          OPTIONS+=(--commit-timestamp=${{ inputs.commit-timestamp }})
+        fi
+        
         ${PIPECTL} event register "${OPTIONS[@]}"
