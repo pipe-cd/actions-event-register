@@ -32,6 +32,10 @@ For Event watcher, see: [the documentation](https://pipecd.dev/docs/user-guide/e
 
 **Optional**: Require pipectl >= 0.51.0. The commit hash that triggers the event. This is required if you want to use PipeCD Deployment Trace feature.
 
+### `commit-url`
+
+**Optional**: Require pipectl >= 0.51.0. The URL of commit that triggers the event. This is required if you want to use PipeCD Deployment Trace feature.
+
 ### `commit-title`
 
 **Optional**: The title of commit that triggers the event.
@@ -39,10 +43,6 @@ For Event watcher, see: [the documentation](https://pipecd.dev/docs/user-guide/e
 ### `commit-message`
 
 **Optional**: The message of commit that triggers the event.
-
-### `commit-url`
-
-**Optional**: The URL of commit that triggers the event.
 
 ### `commit-author`
 
