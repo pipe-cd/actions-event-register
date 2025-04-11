@@ -13,7 +13,7 @@ This document explains the process to release a new version of this action.
 3. Create a new tag at "Choose a tag"
 
     - Please check the previous version and leave the other options at their defaults.
-    - Especially, choose "Target: main"
+    - Choose "Target: main".
 
 4. Click "Auto-generate release notes"
 
