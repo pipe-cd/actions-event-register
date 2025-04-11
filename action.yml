@@ -105,27 +105,27 @@ runs:
         fi
 
         if [ -n "${{ inputs.commit-hash }}" ]; then
-          OPTIONS+=(--commit-hash=${{ inputs.commit-hash }})
+          OPTIONS+=(--commit-hash="${{ inputs.commit-hash }}")
         fi
 
         if [ -n "${{ inputs.commit-url }}" ]; then
-          OPTIONS+=(--commit-url=${{ inputs.commit-url }})
+          OPTIONS+=(--commit-url="${{ inputs.commit-url }}")
         fi
 
         if [ -n "${{ inputs.commit-title }}" ]; then
-          OPTIONS+=(--commit-title=${{ inputs.commit-title }})
+          OPTIONS+=(--commit-title="${{ inputs.commit-title }}")
         fi
 
         if [ -n "${{ inputs.commit-message }}" ]; then
-          OPTIONS+=(--commit-message=${{ inputs.commit-message }})
+          OPTIONS+=(--commit-message="${{ inputs.commit-message }}")
         fi
 
         if [ -n "${{ inputs.commit-author }}" ]; then
-          OPTIONS+=(--commit-author=${{ inputs.commit-author }})
+          OPTIONS+=(--commit-author="${{ inputs.commit-author }}")
         fi
 
         if [ -n "${{ inputs.commit-timestamp }}" ]; then
-          OPTIONS+=(--commit-timestamp=${{ inputs.commit-timestamp }})
+          OPTIONS+=(--commit-timestamp="${{ inputs.commit-timestamp }}")
         fi
-        
+
         ${PIPECTL} event register "${OPTIONS[@]}"
