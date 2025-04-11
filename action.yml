@@ -97,11 +97,11 @@ runs:
         )
 
         if [ -n "${{ inputs.labels }}" ]; then
-          OPTIONS+=(--labels=${{ inputs.labels }})
+          OPTIONS+=(--labels="${{ inputs.labels }}")
         fi
 
         if [ -n "${{ inputs.contexts }}" ]; then
-          OPTIONS+=(--contexts=${{ inputs.contexts }})
+          OPTIONS+=(--contexts="${{ inputs.contexts }}")
         fi
 
         if [ -n "${{ inputs.commit-hash }}" ]; then
@@ -113,15 +113,15 @@ runs:
         fi
 
         if [ -n "${{ inputs.commit-title }}" ]; then
-          OPTIONS+=(--commit-title=${{ inputs.commit-title }})
+          OPTIONS+=(--commit-title="${{ inputs.commit-title }}")
         fi
 
         if [ -n "${{ inputs.commit-message }}" ]; then
-          OPTIONS+=(--commit-message=${{ inputs.commit-message }})
+          OPTIONS+=(--commit-message="${{ inputs.commit-message }}")
         fi
 
         if [ -n "${{ inputs.commit-author }}" ]; then
-          OPTIONS+=(--commit-author=${{ inputs.commit-author }})
+          OPTIONS+=(--commit-author="${{ inputs.commit-author }}")
         fi
 
         if [ -n "${{ inputs.commit-timestamp }}" ]; then
